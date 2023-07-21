@@ -1,6 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
 // Pages
 import { RootPage } from "./pages/root.page";
 // Utilities
@@ -16,7 +18,16 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <RootPage />
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "dark",
+          }}
+        >
+          <Notifications position="top-right" />
+          <RootPage />
+        </MantineProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

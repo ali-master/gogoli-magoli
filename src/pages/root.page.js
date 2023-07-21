@@ -10,6 +10,9 @@ const LazyUsersPage = lazy(() =>
 const LazyAboutUsPage = lazy(() =>
   import(/* webpackChunkName: "AboutUsPage" */ "./pages/AboutUs/about-us.page")
 );
+const LazyAuthPage = lazy(() =>
+  import(/* webpackChunkName: "AuthPage" */ "./pages/Auth/auth.page")
+);
 
 export function RootPage() {
   return (
@@ -25,10 +28,14 @@ export function RootPage() {
           <li>
             <Link to="/users">Users</Link>
           </li>
+          <li>
+            <Link to="/auth/login">Login</Link>
+          </li>
         </ul>
       </nav>
       <Suspense fallback={<div>Loading...</div>}>
         <Switch>
+          <Route path="/auth" component={LazyAuthPage} />
           <Route path="/about" component={LazyAboutUsPage} />
           <Route path="/users" component={LazyUsersPage} />
           <Route path="/">Home</Route>
