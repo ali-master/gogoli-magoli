@@ -1,8 +1,9 @@
+import { notifications } from "@mantine/notifications";
 import { Box, Button, Checkbox, Group, TextInput } from "@mantine/core";
 // Hooks
 import { useForm } from "@mantine/form";
+import { useHistory } from "react-router-dom";
 import { useLocalStorage } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
 
 export default function LoginPage() {
   const form = useForm({
@@ -15,6 +16,7 @@ export default function LoginPage() {
       password: (value) => (value.length >= 8 ? null : "Check your IQ!"),
     },
   });
+  let history = useHistory();
   const [isLoggedIn, setLoggedIn] = useLocalStorage({
     key: "is-user-logged-in",
     defaultValue: false,
@@ -29,6 +31,8 @@ export default function LoginPage() {
         title: "Well Done",
         message: "Successfully loggedIn",
       });
+
+      history.push("/dashboard");
 
       return;
     }

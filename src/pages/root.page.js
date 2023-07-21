@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import { Link, Route, Switch } from "react-router-dom";
+// Components
+import { NoMatch } from "./components/NoMatch";
 // Utilities
 import { lazy } from "react";
 
@@ -38,7 +40,12 @@ export function RootPage() {
           <Route path="/auth" component={LazyAuthPage} />
           <Route path="/about" component={LazyAboutUsPage} />
           <Route path="/users" component={LazyUsersPage} />
-          <Route path="/">Home</Route>
+          <Route path="/" exact>
+            Home
+          </Route>
+          <Route path="*">
+            <NoMatch />
+          </Route>
         </Switch>
       </Suspense>
     </div>
