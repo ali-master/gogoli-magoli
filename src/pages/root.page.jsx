@@ -2,6 +2,10 @@ import { Suspense } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 // Components
 import { NoMatch } from "./components/NoMatch";
+import { Loading } from "../components/Loading";
+import { PublicPage } from "../components/PublicPage";
+import { PrivatePage } from "../components/PrivatePage";
+import { ProtectedPage } from "../components/ProtectedPage";
 // Utilities
 import { lazy } from "react";
 
@@ -14,6 +18,11 @@ const LazyAboutUsPage = lazy(() =>
 );
 const LazyAuthPage = lazy(() =>
   import(/* webpackChunkName: "AuthPage" */ "./pages/Auth/auth.page")
+);
+const LazyDashboardPage = lazy(() =>
+  import(
+    /* webpackChunkName: "DashboardPage" */ "./pages/Dashboard/dashboard.page"
+  )
 );
 
 export function RootPage() {
@@ -35,17 +44,18 @@ export function RootPage() {
           </li>
         </ul>
       </nav>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loading />}>
         <Switch>
-          <Route path="/auth" component={LazyAuthPage} />
-          <Route path="/about" component={LazyAboutUsPage} />
-          <Route path="/users" component={LazyUsersPage} />
-          <Route path="/" exact>
+          <ProtectedPage path="/auth" component={LazyAuthPage} />
+          <PrivatePage path="/about" component={LazyAboutUsPage} />
+          <PrivatePage path="/users" component={LazyUsersPage} />
+          <PrivatePage path="/dashboard" component={LazyDashboardPage} />
+          <PublicPage path="/" exact>
             Home
-          </Route>
-          <Route path="*">
+          </PublicPage>
+          <PublicPage path="*">
             <NoMatch />
-          </Route>
+          </PublicPage>
         </Switch>
       </Suspense>
     </div>

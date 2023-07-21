@@ -3,36 +3,30 @@ import { Box, Button, Checkbox, Group, TextInput } from "@mantine/core";
 // Hooks
 import { useForm } from "@mantine/form";
 import { useHistory } from "react-router-dom";
-import { useLocalStorage } from "@mantine/hooks";
+import { useAuthentication } from "../../../../../hooks/authentication.hook";
 
 export default function LoginPage() {
   const form = useForm({
     initialValues: {
-      email: "",
-      password: "",
+      email: "admin@jigar.com",
+      password: "12345678",
     },
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
       password: (value) => (value.length >= 8 ? null : "Check your IQ!"),
     },
   });
-  let history = useHistory();
-  const [isLoggedIn, setLoggedIn] = useLocalStorage({
-    key: "is-user-logged-in",
-    defaultValue: false,
-  });
+  const { login } = useAuthentication();
 
   function handleOnSubmit({ email, password }) {
     if (email === "admin@jigar.com" && password === "12345678") {
-      setLoggedIn(true);
-
       notifications.show({
         color: "green",
         title: "Well Done",
         message: "Successfully loggedIn",
       });
 
-      history.push("/dashboard");
+      login();
 
       return;
     }
