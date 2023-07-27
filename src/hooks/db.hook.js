@@ -24,7 +24,21 @@ export function useDB() {
     };
   }
 
+  async function getAuthors() {
+    const res = await db.from("authors").select("id,created_at,name,family");
+
+    return res.data;
+  }
+
+  async function addAuthor({ name, family }) {
+    const res = await db.from("authors").insert([{ name, family }]);
+
+    return res.data;
+  }
+
   return {
     login,
+    getAuthors,
+    addAuthor,
   };
 }

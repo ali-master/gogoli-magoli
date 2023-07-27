@@ -7,9 +7,9 @@ import { Suspense, lazy } from "react";
 import { Loading } from "../../../components/Loading";
 import { PrivatePage } from "../../../components/PrivatePage";
 
-const LazyMerchantsPage = lazy(() =>
+const LazyAuthorsPage = lazy(() =>
   import(
-    /* webpackChunkName: "Dashboard_MerchantsPage" */ "./pages/Merchants/merchant.page"
+    /* webpackChunkName: "Dashboard_AuthorsPage" */ "./pages/Authors/authors.page"
   )
 );
 
@@ -25,8 +25,8 @@ export default function DashboardPage() {
             Wellcome to Dashboard...
           </PrivatePage>
           <PrivatePage
-            path="/dashboard/merchants"
-            component={LazyMerchantsPage}
+            path="/dashboard/authors"
+            component={LazyAuthorsPage}
           />
         </Switch>
       </Suspense>
