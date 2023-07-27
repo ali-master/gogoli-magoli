@@ -34,9 +34,7 @@ export default function AuthorsPage() {
     (async () => {
       const $authors = await db.getAuthors();
 
-      if ($authors.length) {
-        setAuthors($authors);
-      }
+      setAuthors($authors);
     })();
   }
 
@@ -59,6 +57,20 @@ export default function AuthorsPage() {
       }
     })();
   }
+
+  const handleDeleteUser = (id) => {
+    (async () => {
+      try {
+        setIsLoading(true);
+        await db.deleteAuthor({ id });
+        await prepare();
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  };
 
   return (
     <>
@@ -107,6 +119,7 @@ export default function AuthorsPage() {
                 <th>Name</th>
                 <th>Family</th>
                 <th>Registered At</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -116,6 +129,14 @@ export default function AuthorsPage() {
                   <td>{author.name}</td>
                   <td>{author.family}</td>
                   <td>{author.created_at}</td>
+                  <td>
+                    <Button
+                      onClick={() => handleDeleteUser(author.id)}
+                      loading={isLoading}
+                    >
+                      delete
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -35,10 +35,16 @@ export function useDB() {
 
     return res.data;
   }
+  async function deleteAuthor({ id }) {
+    const res = await db.from("authors").delete().eq("id", id);
+
+    return res.data;
+  }
 
   return {
     login,
     getAuthors,
     addAuthor,
+    deleteAuthor,
   };
 }
