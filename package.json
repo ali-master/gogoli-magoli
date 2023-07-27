@@ -16,6 +16,7 @@
     "@mantine/prism": "^6.0.17",
     "@mantine/spotlight": "^6.0.17",
     "@mantine/tiptap": "^6.0.17",
+    "@reduxjs/toolkit": "^1.9.5",
     "@supabase/supabase-js": "^2.31.0",
     "@tabler/icons-react": "^2.27.0",
     "@testing-library/jest-dom": "^5.17.0",
@@ -31,7 +32,6 @@
     "react-redux": "^8.1.1",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
-    "redux": "^4.2.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
