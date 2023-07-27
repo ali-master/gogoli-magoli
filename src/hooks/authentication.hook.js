@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useDB } from "./db.hook";
 
 export function useAuthentication() {
   const history = useHistory();
   const key = "is-user-logged-in";
   const [isLoggedIn, setIsLoggedIn] = useState(checkIsLoggedIn());
+  const db = useDB();
 
   function setLoggedIn(value) {
     localStorage.setItem(key, value);
@@ -13,14 +15,12 @@ export function useAuthentication() {
 
   function checkIsLoggedIn() {
     const value = localStorage.getItem(key);
-    if (value && value === "true") {
-      return true;
-    }
 
-    return false;
+    return value && value === "true";
   }
 
-  function login() {
+  async function login(email, password) {
+    await db.login(email, password);
     setLoggedIn(true);
     const quries = history.location.search
       ? new URLSearchParams(history.location.search)

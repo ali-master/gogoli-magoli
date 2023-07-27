@@ -1,8 +1,7 @@
 import { notifications } from "@mantine/notifications";
-import { Box, Button, Checkbox, Group, TextInput } from "@mantine/core";
+import { Box, Button, Group, TextInput } from "@mantine/core";
 // Hooks
 import { useForm } from "@mantine/form";
-import { useHistory } from "react-router-dom";
 import { useAuthentication } from "../../../../../hooks/authentication.hook";
 
 export default function LoginPage() {
@@ -19,23 +18,21 @@ export default function LoginPage() {
   const { login } = useAuthentication();
 
   function handleOnSubmit({ email, password }) {
-    if (email === "admin@jigar.com" && password === "12345678") {
-      notifications.show({
-        color: "green",
-        title: "Well Done",
-        message: "Successfully loggedIn",
+    login(email, password)
+      .then(() => {
+        notifications.show({
+          color: "green",
+          title: "Well Done",
+          message: "Successfully loggedIn",
+        });
+      })
+      .catch(() => {
+        notifications.show({
+          color: "red",
+          title: "Failed",
+          message: "Wrong Credentials",
+        });
       });
-
-      login();
-
-      return;
-    }
-
-    notifications.show({
-      color: "red",
-      title: "Failed",
-      message: "Wrong Credentials",
-    });
   }
 
   return (
